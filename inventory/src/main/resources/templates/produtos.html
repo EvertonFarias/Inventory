@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Produtos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .edit-button {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+<h1>Lista de Produtos</h1>
+<a href="/cadastrar">
+    <p>cadastrar um produto</p>
+</a>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Descrição</th>
+        <th>Editar</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:each="product : ${produtos}">
+        <td th:text="${product.idProduct}"></td>
+        <td th:text="${product.name}"></td>
+        <td th:text="${product.price}"></td>
+        <td th:text="${product.description}"></td>
+        <!-- Adicionando um link para a página de edição com o ID do produto -->
+        <td><a th:href="@{'/products/' + ${product.idProduct}}"><img class="edit-button" src="/img/pencil.png" alt=""></a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+
+</html>

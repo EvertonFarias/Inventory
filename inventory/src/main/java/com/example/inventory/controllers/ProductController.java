@@ -9,39 +9,38 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController
+@Controller
 public class ProductController {
     @Autowired
     ProductRepository productRepository;
 
 
     @PostMapping("/products")
-    public ResponseEntity<ProductModel> saveProduct(@Valid ProductRecordDto productRecordDto) {
-        var productModel = new ProductModel();
-        BeanUtils.copyProperties(productRecordDto, productModel);
-        return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
-    }
-
-    @GetMapping("/products")
-    public ResponseEntity<List<ProductModel>> getAllProducts(){
-        return ResponseEntity.status(HttpStatus.OK).body(productRepository.findAll());
-    }
-
-    @GetMapping("/products/{id}")
-    public ResponseEntity<Object> getOneProduct(@PathVariable(value="id") UUID id){
-        Optional<ProductModel> productO = productRepository.findById(id);
-        if(productO.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
+    public String saveProduct(@Valid ProductRecordDto productRecordDto, BindingResult result, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "cadastrarProduto";
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(productO.get());
-    }
+        var productModel = new ProductModel();
+        BeanUtils.copyProperties(productRecordDto, productModel);
 
+        // Define a data de criação como a data e hora atuais
+        productModel.setCreatedAt(LocalDateTime.now());
+
+        productRepository.save(productModel);
+
+        return "redirect:/products";
+    }
 
 }
