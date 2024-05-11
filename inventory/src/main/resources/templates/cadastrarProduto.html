@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Produto</title>
+</head>
+<body>
+<h1>Cadastrar Novo Produto</h1>
+<form action="/products" method="post">
+    <label for="name">Nome:</label><br>
+    <input type="text" id="name" name="name"><br>
+
+    <label for="price">Preço:</label><br>
+    <input type="text" id="price" name="price"><br>
+
+    <label for="description">Descrição:</label><br>
+    <textarea id="description" name="description"></textarea><br>
+
+    <button type="submit">Cadastrar</button>
+</form>
+</body>
+</html>
