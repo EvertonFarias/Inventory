@@ -22,8 +22,20 @@ public class ProductModel implements Serializable {
     private String description;
     private LocalDateTime createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private CategoryModel category;
+
     public Long getIdProduct() {
         return idProduct;
+    }
+
+    public CategoryModel getCategory() {
+        return category;
+    }
+
+    public void setCategory(CategoryModel category) {
+        this.category = category;
     }
 
     public void setIdProduct(Long idProduct) {

@@ -16,6 +16,14 @@
     <label for="description">Descrição:</label><br>
     <textarea id="description" name="description"></textarea><br>
 
+    <label for="category">Categoria:</label><br>
+    <select id="category" name="categoryId">
+        <option value="">Selecione uma categoria...</option>
+
+        <option th:each="category : ${categories}" th:value="${category.idCategory}" th:text="${category.categoryName}"></option>
+
+    </select><br>
+
     <button type="submit">Cadastrar</button>
 </form>
 </body>
