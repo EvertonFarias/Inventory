@@ -1,4 +1,5 @@
 package com.example.inventory.controllers;
+import com.example.inventory.entities.BinaryTree;
 import com.example.inventory.models.CategoryModel;
 import com.example.inventory.models.ProductModel;
 import com.example.inventory.repositories.CategoryRepository;
@@ -29,17 +30,23 @@ public class WebController {
         return "cadastrarProduto";
     }
 
+
     @GetMapping("/products")
     public String showAllProducts(Model model) {
-        //ordena os produtos do mais recente para o mais antigo pela data de criação
         List<ProductModel> produtos = productRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        BinaryTree binaryTree = new BinaryTree();
+
+        for (ProductModel produto : produtos) {
+            binaryTree.insert(produto);
+        }
+
         List<CategoryModel> categories = categoryRepository.findAll();
 
-        model.addAttribute("produtos", produtos);
-        //to passando esse aqui agora, porque provavelmente também vou usar ele futuramente aqui.
+        model.addAttribute("binaryTree", binaryTree);
         model.addAttribute("categories", categories);
         return "produtos";
     }
+
 }
 
 
