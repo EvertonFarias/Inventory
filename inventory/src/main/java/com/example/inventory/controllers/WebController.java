@@ -8,8 +8,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class WebController {
@@ -33,7 +35,7 @@ public class WebController {
 
     @GetMapping("/products")
     public String showAllProducts(Model model) {
-        List<ProductModel> produtos = productRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+        List<ProductModel> produtos = productRepository.findAll();
         BinaryTree binaryTree = new BinaryTree();
 
         for (ProductModel produto : produtos) {
@@ -46,6 +48,18 @@ public class WebController {
         model.addAttribute("categories", categories);
         return "produtos";
     }
+
+    @GetMapping("/products/{id}")
+    public String updateProduct(@PathVariable("id") Long id, Model model) {
+        // Busca o produto pelo ID
+        System.out.println("aqui é o ID: "+ id);
+        Optional<ProductModel> produtoOptional = productRepository.findById(id);
+        ProductModel produto = produtoOptional.get();
+        model.addAttribute("produto", produto);
+
+        return "detalhesProduto";
+    }
+
 
 }
 

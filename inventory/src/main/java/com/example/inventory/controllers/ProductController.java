@@ -31,13 +31,19 @@ public class ProductController {
         if (result.hasErrors()) {
             return "cadastrarProduto";
         }
+        System.out.println("CategoryId received: " + productRecordDto.getCategoryId());
+        System.out.println("DTO received: " + productRecordDto.toString());
+
+
+
 
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productRecordDto, productModel);
-
+        System.out.println("COPIADO COM SUCESSO\n");
+        System.out.println(productModel.toString());
         // Define a data de criação como a data e hora atuais
         productModel.setCreatedAt(LocalDateTime.now());
-
+        productModel.setCategory(productRecordDto.getCategoryId());
         productRepository.save(productModel);
 
         return "redirect:/products";

@@ -46,7 +46,7 @@
     </thead>
     <tbody>
 
-    <tr th:each="product : ${binaryTree.traverseInOrder()}">
+    <tr th:each="product : ${binaryTree.traverseReverseInOrder()}">
         <td th:text="${product.idProduct}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>

@@ -2,6 +2,8 @@ package com.example.inventory.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -24,6 +26,7 @@ public class ProductModel implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "category_id")
+    @NotNull
     private CategoryModel category;
 
     public Long getIdProduct() {
@@ -60,6 +63,18 @@ public class ProductModel implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductModel{" +
+                "idProduct=" + idProduct +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                ", description='" + description + '\'' +
+                ", createdAt=" + createdAt +
+                ", category=" + category +
+                '}';
     }
 
     public void setDescription(String description) {

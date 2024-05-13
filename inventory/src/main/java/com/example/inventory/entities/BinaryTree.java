@@ -40,9 +40,24 @@ public class BinaryTree {
 
     private void traverseInOrderRec(TreeNode root, List<ProductModel> produtos) {
         if (root != null) {
-            traverseInOrderRec(root.left, produtos);
+            traverseInOrderRec(root.right, produtos); // Visita o nó à direita primeiro
             produtos.add(root.product);
-            traverseInOrderRec(root.right, produtos);
+            traverseInOrderRec(root.left, produtos); // Visita o nó à esquerda por último
+        }
+    }
+
+    // Função para percorrer a árvore em ordem reversa (do último para o primeiro)
+    public List<ProductModel> traverseReverseInOrder() {
+        List<ProductModel> produtos = new ArrayList<>();
+        traverseReverseInOrderRec(root, produtos);
+        return produtos;
+    }
+
+    private void traverseReverseInOrderRec(TreeNode root, List<ProductModel> produtos) {
+        if (root != null) {
+            traverseReverseInOrderRec(root.left, produtos); // Visita o nó à esquerda primeiro
+            produtos.add(root.product);
+            traverseReverseInOrderRec(root.right, produtos); // Visita o nó à direita por último
         }
     }
 }

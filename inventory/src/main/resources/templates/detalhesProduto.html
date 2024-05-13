@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+</head>
+<body>
+<h1>Detalhes do Produto</h1>
+<div>
+    <p><strong>ID do Produto:</strong> <span th:text="${produto.getIdProduct()}"></span></p>
+    <p><strong>Nome:</strong> <span th:text="${produto.getName()}"></span></p>
+    <p><strong>Preço:</strong> <span th:text="${produto.getPrice()}"></span></p>
+    <p><strong>Descrição:</strong> <span th:text="${produto.getDescription()}"></span></p>
+    <p><strong>Criado em:</strong> <span th:text="${produto.getCreatedAt()}"></span></p>
+    <p><strong>Categoria:</strong> <span th:text="${produto.getCategory().getCategoryName()}"></span></p>
+</div>
+</body>
+</html>
