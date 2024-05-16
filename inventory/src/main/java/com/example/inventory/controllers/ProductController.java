@@ -2,6 +2,7 @@ package com.example.inventory.controllers;
 
 
 import com.example.inventory.dtos.ProductRecordDto;
+import com.example.inventory.models.CategoryModel;
 import com.example.inventory.models.ProductModel;
 import com.example.inventory.repositories.ProductRepository;
 import jakarta.validation.Valid;
@@ -31,8 +32,8 @@ public class ProductController {
         if (result.hasErrors()) {
             return "cadastrarProduto";
         }
-        System.out.println("CategoryId received: " + productRecordDto.getCategoryId());
-        System.out.println("DTO received: " + productRecordDto.toString());
+//        System.out.println("CategoryId received: " + productRecordDto.getCategoryId());
+//        System.out.println("DTO received: " + productRecordDto.toString());
 
 
 
@@ -48,5 +49,22 @@ public class ProductController {
 
         return "redirect:/products";
     }
+    @PostMapping("/products/{id}")
+    public String updateProduct(@PathVariable("id") long id, @Valid ProductRecordDto productRecordDto, BindingResult result, RedirectAttributes redirectAttributes) {
+
+
+        ProductModel productModel = productRepository.findById(id).get();
+        BeanUtils.copyProperties(productRecordDto, productModel);
+        CategoryModel category = productRecordDto.getCategoryId();
+        productModel.setCategory(category);
+
+        productRepository.save(productModel); // Salva as alterações no banco de dados
+        System.out.println("atualizado");
+        System.out.println(productModel.toString());
+        return "redirect:/products"; // Redireciona para a página de listagem de produtos
+
+    }
+
+
 
 }
