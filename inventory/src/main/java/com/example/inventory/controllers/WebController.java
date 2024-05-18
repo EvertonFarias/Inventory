@@ -24,6 +24,22 @@ public class WebController {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
     }
+    @GetMapping("/")
+    public String index(Model model) {
+        List<ProductModel> produtos = productRepository.findAll();
+        BinaryTree binaryTree = new BinaryTree();
+
+        for (ProductModel produto : produtos) {
+            binaryTree.insert(produto);
+        }
+
+        List<CategoryModel> categories = categoryRepository.findAll();
+
+        model.addAttribute("binaryTree", binaryTree);
+        model.addAttribute("categories", categories);
+        return "index";
+    }
+
 
     @GetMapping("/cadastrar")
     public String cadastrar(Model model) {
@@ -46,7 +62,7 @@ public class WebController {
 
         model.addAttribute("binaryTree", binaryTree);
         model.addAttribute("categories", categories);
-        return "produtos";
+        return "products";
     }
 
     @GetMapping("/products/{id}")

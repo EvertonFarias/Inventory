@@ -52,9 +52,10 @@ public class ProductController {
         // Define a data de criação como a data e hora atuais
         productModel.setCreatedAt(LocalDateTime.now());
         productModel.setCategory(productRecordDto.getCategoryId());
+        productModel.setQuantity(productRecordDto.getQuantity());
         productRepository.save(productModel);
 
-        return "redirect:/products";
+        return "redirect:/";
     }
     @PutMapping("/products/{id}")
     public String updateProduct(@PathVariable("id") long id, @Valid ProductRecordDto productRecordDto, BindingResult result, RedirectAttributes redirectAttributes) {
@@ -86,7 +87,7 @@ public class ProductController {
         productRepository.delete(product);
 
         // Redireciona para a página de lista de produtos após a exclusão
-        return "redirect:/products";
+        return "redirect:/";
     }
 
 
