@@ -73,7 +73,7 @@ public class ProductModel implements Serializable {
                 ", price=" + price +
                 ", description='" + description + '\'' +
                 ", createdAt=" + createdAt +
-                ", category=" + category +
+                ", category=" + category.getCategoryName() +
                 '}';
     }
 

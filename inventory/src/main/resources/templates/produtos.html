@@ -21,7 +21,8 @@
             background-color: #f2f2f2;
         }
 
-        .edit-button {
+        .edit-button,
+        .delete-button {
             width: 20px;
             height: 20px;
             cursor: pointer;
@@ -42,19 +43,29 @@
         <th>Preço</th>
         <th>Descrição</th>
         <th>Editar</th>
+        <th>Deletar</th>
     </tr>
     </thead>
     <tbody>
-
-    <tr th:each="product : ${binaryTree.traverseReverseInOrder()}">
+    <tr th:each="product : ${binaryTree.traverseInOrder()}">
         <td th:text="${product.idProduct}"></td>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td th:text="${product.description}"></td>
-        <!-- Adicionando um link para a página de edição com o ID do produto -->
-        <td><a th:href="@{'/products/' + ${product.idProduct}}"><img class="edit-button" src="/img/pencil.png" alt=""></a></td>
+
+        <td><a th:href="@{'/products/' + ${product.idProduct}}"><img class="edit-button" src="/img/pencil.png"
+                                                                     alt=""></a></td>
+        <td>
+            <form th:action="@{'/products/' + ${product.idProduct}}" method="post">
+                <input type="hidden" name="_method" value="DELETE" />
+
+                <button type="submit"><img class="delete-button" src="/img/trash.png" alt=""></button>
+            </form>
+
+        </td>
     </tr>
     </tbody>
+
 </table>
 </body>
 

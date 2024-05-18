@@ -56,8 +56,10 @@ public class WebController {
         Optional<ProductModel> produtoOptional = productRepository.findById(id);
         ProductModel produto = produtoOptional.get();
         model.addAttribute("produto", produto);
+        List<CategoryModel> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
 
-        return "detalhesProduto";
+        return "editar";
     }
 
 
