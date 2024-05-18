@@ -21,8 +21,19 @@ public class ProductModel implements Serializable {
     private Long idProduct;
     private String name;
     private BigDecimal price;
+    private Long quantity;
     private String description;
     private LocalDateTime createdAt;
+
+    public long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(long quantity) {
+        this.quantity = quantity;
+    }
+
+
 
     @ManyToOne
     @JoinColumn(name = "category_id")
