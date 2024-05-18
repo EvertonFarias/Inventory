@@ -8,6 +8,7 @@
 <body>
 <h1>Detalhes do Produto</h1>
 <form action="#" th:action="@{'/products/' + ${produto.getIdProduct()}}" method="post">
+    <input type="hidden" name="_method" value="PUT" />
 
     <div>
         <label for="name">Nome:</label>
