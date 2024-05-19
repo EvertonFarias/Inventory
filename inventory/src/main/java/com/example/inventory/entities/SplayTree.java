@@ -126,26 +126,42 @@ public class SplayTree {
         if (root == null) {
             return; // Árvore vazia
         }
-
         root = splay(root, product.getPrice());
 
-        // Encontra o produto na lista de produtos do nó
+        // Encontra o produto na lista de produtos do nó e o remove
         boolean removed = root.products.removeIf(p -> p.getIdProduct().equals(idProduct));
 
-        // Se o produto foi removido da lista, não é necessário fazer mais nada
-        if (removed) return;
-
-
-    }
-
-    public void update(ProductModel product) {
-        if (root == null) {
-            return; // Árvore vazia, nada a fazer
+        // Se o produto foi removido da lista e a lista está vazia, precisamos remover o nó
+        if (removed && root.products.isEmpty()) {
+            if (root.left == null) {
+                root = root.right;
+            } else {
+                TreeNode rightSubtree = root.right;
+                root = root.left;
+                splay(root, product.getPrice());
+                root.right = rightSubtree;
+            }
         }
-
-        remove(product.getIdProduct(), product);
-        insert(product);
     }
+    public List<ProductModel> searchByName(String name) {
+        List<ProductModel> matchingProducts = new ArrayList<>();
+        searchByNameRec(root, name, matchingProducts);
+        return matchingProducts;
+    }
+
+    private void searchByNameRec(TreeNode root, String name, List<ProductModel> matchingProducts) {
+        if (root != null) {
+            searchByNameRec(root.left, name, matchingProducts);
+            for (ProductModel product : root.products) {
+                if (product.getName().equalsIgnoreCase(name)) {
+                    matchingProducts.add(product);
+                }
+            }
+            searchByNameRec(root.right, name, matchingProducts);
+        }
+    }
+
+
 
     private static class TreeNode {
         ProductModel product;

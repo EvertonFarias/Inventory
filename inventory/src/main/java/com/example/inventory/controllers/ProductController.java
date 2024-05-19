@@ -72,14 +72,19 @@ public class ProductController {
 
 
         ProductModel productModel = productRepository.findById(id).get();
+        splayTree.remove(productModel.getIdProduct(), productModel);
         System.out.println(productModel.toString());
         BeanUtils.copyProperties(productRecordDto, productModel);
         productModel.setCategory(productRecordDto.getCategoryId());
         productModel.setQuantity(productRecordDto.getQuantity());
         System.out.println(productRecordDto.toString());
 
+
+
+        splayTree.insert(productModel);
         productRepository.save(productModel); // Salva as alterações no banco de dados
-        splayTree.update(productModel);
+
+
         System.out.println("atualizado");
         System.out.println(productModel.toString());
 
