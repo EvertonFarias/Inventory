@@ -2,8 +2,10 @@ package com.example.inventory.controllers;
 
 
 import com.example.inventory.dtos.ProductRecordDto;
+import com.example.inventory.entities.SplayTree;
 import com.example.inventory.models.CategoryModel;
 import com.example.inventory.models.ProductModel;
+import com.example.inventory.repositories.CategoryRepository;
 import com.example.inventory.repositories.ProductRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -25,9 +27,16 @@ import java.util.UUID;
 
 @Controller
 public class ProductController {
+
+    SplayTree splayTree;
+
     @Autowired
     ProductRepository productRepository;
-    @Bean
+    @Autowired
+    public ProductController(SplayTree splayTree) {
+        this.splayTree = splayTree;
+    }
+        @Bean
     public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
         return new HiddenHttpMethodFilter();
     }
@@ -54,6 +63,7 @@ public class ProductController {
         productModel.setCategory(productRecordDto.getCategoryId());
         productModel.setQuantity(productRecordDto.getQuantity());
         productRepository.save(productModel);
+        splayTree.insert(productModel);
 
         return "redirect:/";
     }
@@ -62,14 +72,18 @@ public class ProductController {
 
 
         ProductModel productModel = productRepository.findById(id).get();
+        System.out.println(productModel.toString());
         BeanUtils.copyProperties(productRecordDto, productModel);
-        CategoryModel category = productRecordDto.getCategoryId();
-        productModel.setCategory(category);
+        productModel.setCategory(productRecordDto.getCategoryId());
+        productModel.setQuantity(productRecordDto.getQuantity());
+        System.out.println(productRecordDto.toString());
 
         productRepository.save(productModel); // Salva as alterações no banco de dados
+        splayTree.update(productModel);
         System.out.println("atualizado");
         System.out.println(productModel.toString());
-        return "redirect:/products"; // Redireciona para a página de listagem de produtos
+
+        return "redirect:/"; // Redireciona para a página de listagem de produtos
 
     }
 
@@ -78,15 +92,15 @@ public class ProductController {
         // Verifica se o produto existe antes de tentar deletá-lo
         Optional<ProductModel> productOptional = productRepository.findById(id);
         if (!productOptional.isPresent()) {
-            // Produto não encontrado, redirecionar ou retornar erro
-            return "redirect:/products"; // Ou outra página de sua escolha
+            // Produto não encontrao
+            return "redirect:/products";
         }
 
-        // Produto encontrado, proceda com a exclusão
         ProductModel product = productOptional.get();
+        splayTree.remove(product.getIdProduct(), product);
         productRepository.delete(product);
 
-        // Redireciona para a página de lista de produtos após a exclusão
+
         return "redirect:/";
     }
 

@@ -88,6 +88,12 @@ table {
     margin: 20px 0;
     background-color: #fff;
 }
+.table-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: black; /* Cor de fundo para o cabeçalho fixo */
+}
 
 table, th, td {
     border: 1px solid #ddd;
@@ -101,11 +107,21 @@ table th, table td {
 table th {
     background-color: #f2f2f2;
 }
+.small-column {
+    width: 40px;
+    text-align: center;
+}
+
 .edit-button,
 .delete-button {
     width: 20px;
     height: 20px;
     cursor: pointer;
+
+}
+button{
+    background-color: transparent;
+    border: none;
 }
 
 footer {

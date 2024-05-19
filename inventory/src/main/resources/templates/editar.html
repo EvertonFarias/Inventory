@@ -19,6 +19,11 @@
         <input type="number" id="price" name="price" step="0.01" th:value="${produto.getPrice()}">
     </div>
     <div>
+        <label for="price">Quantidade:</label>
+        <input type="number" id="quantity" name="quantity" step="0.01" th:value="${produto.getQuantity()}">
+    </div>
+
+    <div>
         <label for="description">Descrição:</label>
         <textarea id="description" name="description" th:text="${produto.getDescription()}"></textarea>
     </div>

@@ -29,34 +29,33 @@
 
 <main>
     <section id="recent-products">
-        <h2>Produtos Recentes</h2>
+        <h2>Produtos Em Estoque</h2>
         <table>
-            <thead>
+            <thead class="table-header">
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Preço</th>
                 <th>Quantidade</th>
-                <th>Editar</th>
-                <th>Deletar</th>
+                <th>Categoria</th>
+                <th class="small-column" >Editar</th>
+                <th class="small-column" >Deletar</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="product : ${binaryTree.traverseInOrder()}">
+            <tr th:each="product : ${splayTree.traversePreOrder()}">
                 <td th:text="${product.idProduct}"></td>
                 <td th:text="${product.name}"></td>
                 <td th:text="${product.price}"></td>
                 <td th:text="${product.quantity}"></td>
+                <td th:text="${product.getCategory().getCategoryName()}"></td>
 
-                <td><a th:href="@{'/products/' + ${product.idProduct}}"><img class="edit-button" src="/img/pencil.png"
-                                                                             alt=""></a></td>
-                <td>
+                <td class="small-column"><a th:href="@{'/products/' + ${product.idProduct}}"><img class="edit-button" src="/img/pencil.png" alt=""></a></td>
+                <td class="small-column" >
                     <form th:action="@{'/products/' + ${product.idProduct}}" method="post">
                         <input type="hidden" name="_method" value="DELETE" />
-
                         <button type="submit"><img class="delete-button" src="/img/trash.png" alt=""></button>
                     </form>
-
                 </td>
             </tr>
             </tbody>

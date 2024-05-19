@@ -1,9 +1,12 @@
 package com.example.inventory.controllers;
 import com.example.inventory.entities.BinaryTree;
+import com.example.inventory.entities.SplayTree;
 import com.example.inventory.models.CategoryModel;
 import com.example.inventory.models.ProductModel;
 import com.example.inventory.repositories.CategoryRepository;
 import com.example.inventory.repositories.ProductRepository;
+import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,23 +22,21 @@ public class WebController {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final SplayTree splayTree;
 
-    public WebController(ProductRepository productRepository, CategoryRepository categoryRepository) {
+    @Autowired
+    public WebController(ProductRepository productRepository, CategoryRepository categoryRepository, SplayTree splayTree) {
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
+        this.splayTree = splayTree;
     }
+
+
+
     @GetMapping("/")
     public String index(Model model) {
-        List<ProductModel> produtos = productRepository.findAll();
-        BinaryTree binaryTree = new BinaryTree();
-
-        for (ProductModel produto : produtos) {
-            binaryTree.insert(produto);
-        }
-
         List<CategoryModel> categories = categoryRepository.findAll();
-
-        model.addAttribute("binaryTree", binaryTree);
+        model.addAttribute("splayTree", splayTree);
         model.addAttribute("categories", categories);
         return "index";
     }
@@ -51,16 +52,8 @@ public class WebController {
 
     @GetMapping("/products")
     public String showAllProducts(Model model) {
-        List<ProductModel> produtos = productRepository.findAll();
-        BinaryTree binaryTree = new BinaryTree();
-
-        for (ProductModel produto : produtos) {
-            binaryTree.insert(produto);
-        }
-
         List<CategoryModel> categories = categoryRepository.findAll();
-
-        model.addAttribute("binaryTree", binaryTree);
+        model.addAttribute("binaryTree", splayTree);
         model.addAttribute("categories", categories);
         return "products";
     }
@@ -71,6 +64,7 @@ public class WebController {
         System.out.println("aqui é o ID: "+ id);
         Optional<ProductModel> produtoOptional = productRepository.findById(id);
         ProductModel produto = produtoOptional.get();
+        splayTree.update(produto);
         model.addAttribute("produto", produto);
         List<CategoryModel> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
