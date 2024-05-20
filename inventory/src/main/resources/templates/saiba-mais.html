@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saiba-Mais</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+<header>
+    <div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/categorias">Categorias</a></li>
+                <li><a href="/saiba-mais">Saiba Mais</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div th:replace="searchButton"></div>
+</header>
+
+<main>
+    <div id="content">
+        <h1>PÁGINA DE SOBRE-MAIS</h1>
+    </div>
+</main>
+
+<div th:replace="footer :: footer"></div>
+</body>
+
+</html>
+

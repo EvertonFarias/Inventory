@@ -163,7 +163,7 @@ public class SplayTree {
 
 
 
-    private static class TreeNode {
+    public static class TreeNode {
         ProductModel product;
         List<ProductModel> products;
         TreeNode left, right;
@@ -174,7 +174,47 @@ public class SplayTree {
             this.products.add(product);
             this.left = this.right = null;
         }
+
+        public ProductModel getProduct() {
+            return product;
+        }
+
+        public void setProduct(ProductModel product) {
+            this.product = product;
+        }
+
+        public List<ProductModel> getProducts() {
+            return products;
+        }
+
+        public void setProducts(List<ProductModel> products) {
+            this.products = products;
+        }
+
+        public TreeNode getLeft() {
+            return left;
+        }
+
+        public void setLeft(TreeNode left) {
+            this.left = left;
+        }
+
+        public TreeNode getRight() {
+            return right;
+        }
+
+        public void setRight(TreeNode right) {
+            this.right = right;
+        }
+
+
     }
 
+    public TreeNode getRoot() {
+        return root;
+    }
 
+    public void setRoot(TreeNode root) {
+        this.root = root;
+    }
 }

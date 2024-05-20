@@ -1,13 +1,10 @@
 package com.example.inventory.controllers;
-import com.example.inventory.entities.BinaryTree;
 import com.example.inventory.entities.SplayTree;
 import com.example.inventory.models.CategoryModel;
 import com.example.inventory.models.ProductModel;
 import com.example.inventory.repositories.CategoryRepository;
 import com.example.inventory.repositories.ProductRepository;
-import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,31 +46,52 @@ public class WebController {
         return "cadastrarProduto";
     }
 
-
-    @GetMapping("/products")
-    public String showAllProducts(Model model) {
-        List<CategoryModel> categories = categoryRepository.findAll();
-        model.addAttribute("binaryTree", splayTree);
-        model.addAttribute("categories", categories);
-        return "products";
+    @GetMapping("/saiba-mais")
+    public String saibaMais() {
+        return "saiba-mais";
     }
 
-    @GetMapping("/products/{id}")
+    @GetMapping("/categorias")
+    public String categorias(Model model) {
+        List<CategoryModel> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
+        return "categorias";
+    }
+
+
+
+    @GetMapping("/{id}")
     public String updateProduct(@PathVariable("id") Long id, Model model) {
         // Busca o produto pelo ID
         System.out.println("aqui é o ID: "+ id);
         Optional<ProductModel> produtoOptional = productRepository.findById(id);
         ProductModel produto = produtoOptional.get();
-        splayTree.update(produto);
         model.addAttribute("produto", produto);
         List<CategoryModel> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
 
-        return "editar";
+        return "editarProduto";
+    }
+    @GetMapping("/detalhes")
+    public String detalhes(Model model) {
+        return "detalhes";
     }
 
 
+
+
+
+
 }
+
+
+
+
+
+
+
+
+
 
 
 
