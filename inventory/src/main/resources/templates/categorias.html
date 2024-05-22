@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Estoque</title>
+    <title>Categorias</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
@@ -13,42 +13,48 @@
     <div>
         <nav>
             <ul>
-                <li><a href="/cadastrar">Cadastrar Produto</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/categorias">Categorias</a></li>
                 <li><a href="/saiba-mais">Saiba Mais</a></li>
             </ul>
         </nav>
     </div>
-    <div th:replace="searchButton"></div>
-
+    <div>
+        <div th:replace="searchButton"></div>
 </header>
 
 <main>
+
+    <section id="category-center" class="register-content">
+        <div><h2  >Cadastrar Categoria</h2>
+         <form class="register-form" action="/categoria" method="post">
+             <div class="form-group">
+                 <input class="register-input" type="text" id="name" name="categoryName" placeholder="Digite um nome">
+             </div>
+             <button class="register-button" type="submit">Cadastrar</button>
+         </form>
+        </div>
+ </section>
+ 
     <section class="content">
-        <h2>Produtos Em Estoque</h2>
+        
+        <h2>Categorias:</h2>
         <table>
             <thead class="table-header">
             <tr>
                 <th>ID</th>
                 <th>Nome</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Categoria</th>
                 <th class="small-column" >Editar</th>
                 <th class="small-column" >Deletar</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="product : ${splayTree.traversePreOrder()}">
-                <td th:text="${product.idProduct}"></td>
-                <td th:text="${product.name}"></td>
-                <td th:text="${product.price}"></td>
-                <td th:text="${product.quantity}"></td>
-                <td th:text="${product.getCategory().getCategoryName()}"></td>
-
-                <td class="small-column"><a th:href="@{'/' + ${product.idProduct}}"><img class="edit-button" src="/img/pencil.png" alt=""></a></td>
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.getIdCategory()}"></td>
+                <td th:text="${category.getCategoryName()}"></td>
+                <td class="small-column"><a th:href="@{'/editarCategoria/' + ${category.getIdCategory()}}"><img class="edit-button" src="/img/pencil.png" alt=""></a></td>
                 <td class="small-column" >
-                    <form th:action="@{'/' + ${product.idProduct}}" method="post">
+                    <form th:action="@{'/categoria/' + ${category.getIdCategory()}}" method="post">
                         <input type="hidden" name="_method" value="DELETE" />
                         <button class="trash" type="submit"><img class="delete-button" src="/img/trash.png" alt=""></button>
                     </form>

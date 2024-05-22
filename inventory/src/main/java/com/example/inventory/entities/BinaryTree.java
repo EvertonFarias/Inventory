@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BinaryTree {
-    private TreeNode root;
+    private TreeNodeBinary root;
 
     public BinaryTree() {
         this.root = null;
@@ -16,9 +16,9 @@ public class BinaryTree {
         this.root = insertRec(this.root, product);
     }
 
-    private TreeNode insertRec(TreeNode root, ProductModel product) {
+    private TreeNodeBinary insertRec(TreeNodeBinary root, ProductModel product) {
         if (root == null) {
-            root = new TreeNode(product);
+            root = new TreeNodeBinary(product);
             return root;
         }
 
@@ -38,7 +38,7 @@ public class BinaryTree {
         return produtos;
     }
 
-    private void traverseInOrderRec(TreeNode root, List<ProductModel> produtos) {
+    private void traverseInOrderRec(TreeNodeBinary root, List<ProductModel> produtos) {
         if (root != null) {
             traverseInOrderRec(root.right, produtos); // Visita o nó à direita primeiro
             produtos.add(root.product);
