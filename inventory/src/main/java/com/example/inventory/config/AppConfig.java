@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
 public class AppConfig {
 
@@ -23,14 +21,10 @@ public class AppConfig {
     @Bean
     public SplayTree splayTree() {
         if (splayTreeInstance == null) {
-            List<ProductModel> produtos = productRepository.findAll();
             SplayTree splayTree = new SplayTree();
-            for (ProductModel produto : produtos) {
-                splayTree.insert(produto);
-            }
+            productRepository.findAll().forEach(splayTree::insert); // mesma coisa de : productRepository.findAll().forEach(product -> splayTree.insert(product));
             splayTreeInstance = splayTree;
         }
         return splayTreeInstance;
     }
 }
-
