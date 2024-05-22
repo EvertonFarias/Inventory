@@ -153,7 +153,7 @@ public class SplayTree {
         if (root != null) {
             searchByNameRec(root.left, name, matchingProducts);
             for (ProductModel product : root.products) {
-                if (product.getName().equalsIgnoreCase(name)) {
+                if (product.getName().contains(name)) {
                     matchingProducts.add(product);
                 }
             }

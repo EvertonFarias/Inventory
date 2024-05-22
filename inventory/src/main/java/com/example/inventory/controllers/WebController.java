@@ -67,15 +67,12 @@ public class WebController {
         Optional<ProductModel> produtoOptional = productRepository.findById(id);
         ProductModel produto = produtoOptional.get();
         model.addAttribute("produto", produto);
-        List<CategoryModel> categories = categoryRepository.findAll();
-        model.addAttribute("categories", categories);
+        List<CategoryModel> categoria = categoryRepository.findAll();
+        model.addAttribute("categories", categoria);
 
         return "editarProduto";
     }
-    @GetMapping("/detalhes")
-    public String detalhes(Model model) {
-        return "detalhes";
-    }
+
 
 
 

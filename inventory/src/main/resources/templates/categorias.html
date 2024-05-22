@@ -24,7 +24,20 @@
 </header>
 
 <main>
+
+    <section id="category-center" class="register-content">
+        <div><h2  >Cadastrar Categoria</h2>
+         <form class="register-form" action="/categoria" method="post">
+             <div class="form-group">
+                 <input class="register-input" type="text" id="name" name="categoryName" placeholder="Digite um nome">
+             </div>
+             <button class="register-button" type="submit">Cadastrar</button>
+         </form>
+        </div>
+ </section>
+ 
     <section class="content">
+        
         <h2>Categorias:</h2>
         <table>
             <thead class="table-header">
@@ -39,9 +52,9 @@
             <tr th:each="category : ${categories}">
                 <td th:text="${category.getIdCategory()}"></td>
                 <td th:text="${category.getCategoryName()}"></td>
-                <td class="small-column"><a th:href="@{'/products/' + ${category.getIdCategory()}}"><img class="edit-button" src="/img/pencil.png" alt=""></a></td>
+                <td class="small-column"><a th:href="@{'/editarCategoria/' + ${category.getIdCategory()}}"><img class="edit-button" src="/img/pencil.png" alt=""></a></td>
                 <td class="small-column" >
-                    <form th:action="@{'/products/' + ${category.getIdCategory()}}" method="post">
+                    <form th:action="@{'/categoria/' + ${category.getIdCategory()}}" method="post">
                         <input type="hidden" name="_method" value="DELETE" />
                         <button class="trash" type="submit"><img class="delete-button" src="/img/trash.png" alt=""></button>
                     </form>
