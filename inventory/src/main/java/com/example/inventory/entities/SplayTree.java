@@ -150,6 +150,7 @@ public class SplayTree {
     }
 
     private void searchByNameRec(TreeNode root, String name, List<ProductModel> matchingProducts) {
+        name = name.toLowerCase();
         if (root != null) {
             searchByNameRec(root.left, name, matchingProducts);
             for (ProductModel product : root.products) {
