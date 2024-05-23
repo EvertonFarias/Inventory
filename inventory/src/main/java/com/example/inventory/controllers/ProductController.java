@@ -4,6 +4,7 @@ package com.example.inventory.controllers;
 import com.example.inventory.dtos.ProductRecordDto;
 import com.example.inventory.entities.MyLinkedList;
 import com.example.inventory.entities.SplayTree;
+import com.example.inventory.models.CategoryModel;
 import com.example.inventory.models.ProductModel;
 import com.example.inventory.repositories.CategoryRepository;
 import com.example.inventory.repositories.ProductRepository;
@@ -102,14 +103,29 @@ public class ProductController {
         return "redirect:/";
     }
     @PostMapping("/produto")
-    public String searchProduct(@RequestParam("productName") String productName, Model model) {
+    public String searchProduct(@RequestParam("productName") String productName,
+                                @RequestParam(name = "categoryId", required = false) Long categoryId,
+                                Model model) {
         List<ProductModel> searchProducts = new ArrayList<>();
-        for (ProductModel productModel : splayTree.searchByName(productName)){
-            searchProducts.add(productModel);
+
+        // Verifica se a categoria foi selecionada
+        if (categoryId != null && categoryId > 0) {
+            // Filtra por nome e categoria
+            for (ProductModel productModel : splayTree.searchByNameAndCategory(productName, categoryId)) {
+                searchProducts.add(productModel);
+            }
+        } else {
+            // Filtra apenas por nome
+            for (ProductModel productModel : splayTree.searchByName(productName)) {
+                searchProducts.add(productModel);
+            }
         }
         model.addAttribute("searchProducts", searchProducts);
+        List<CategoryModel> categories = categoryRepository.findAll();
+        model.addAttribute("categories", categories);
         return "buscarProduto";
     }
+
 
 
 
