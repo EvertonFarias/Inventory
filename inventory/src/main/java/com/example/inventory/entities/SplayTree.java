@@ -160,18 +160,18 @@ public class SplayTree {
             searchByNameRec(root.right, name, matchingProducts);
         }
     }
-    public List<ProductModel> searchByNameAndCategory(String name, Long categoryId) {
-        List<ProductModel> matchingProducts = new ArrayList<>();
+    public LinkedList searchByNameAndCategory(String name, Long categoryId) {
+        LinkedList matchingProducts = new LinkedList();
         searchByNameAndCategoryRec(root, name, categoryId, matchingProducts);
         return matchingProducts;
     }
 
-    private void searchByNameAndCategoryRec(TreeNode root, String name, Long categoryId, List<ProductModel> matchingProducts) {
+    private void searchByNameAndCategoryRec(TreeNode root, String name, Long categoryId, LinkedList matchingProducts) {
         if (root != null) {
             searchByNameAndCategoryRec(root.left, name, categoryId, matchingProducts);
             for (ProductModel product : root.products) {
                 if (product.getName().contains(name) && product.getCategory().getIdCategory().equals(categoryId)) {
-                    matchingProducts.add(product);
+                    matchingProducts.insert(product);
                 }
             }
             searchByNameAndCategoryRec(root.right, name, categoryId, matchingProducts);

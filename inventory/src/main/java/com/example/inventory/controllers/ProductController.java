@@ -2,7 +2,7 @@ package com.example.inventory.controllers;
 
 
 import com.example.inventory.dtos.ProductRecordDto;
-import com.example.inventory.entities.MyLinkedList;
+import com.example.inventory.entities.LinkedList;
 import com.example.inventory.entities.SplayTree;
 import com.example.inventory.models.CategoryModel;
 import com.example.inventory.models.ProductModel;
@@ -106,25 +106,29 @@ public class ProductController {
     public String searchProduct(@RequestParam("productName") String productName,
                                 @RequestParam(name = "categoryId", required = false) Long categoryId,
                                 Model model) {
-        List<ProductModel> searchProducts = new ArrayList<>();
+        LinkedList searchProducts = new LinkedList();
 
         // Verifica se a categoria foi selecionada
         if (categoryId != null && categoryId > 0) {
             // Filtra por nome e categoria
             for (ProductModel productModel : splayTree.searchByNameAndCategory(productName, categoryId)) {
-                searchProducts.add(productModel);
+                searchProducts.insert(productModel);
             }
-        } else {
+        } else if(categoryId == null && productName != null && !productName.isEmpty()) {
             // Filtra apenas por nome
             for (ProductModel productModel : splayTree.searchByName(productName)) {
-                searchProducts.add(productModel);
+                searchProducts.insert(productModel);
             }
+        } else {
+            return "redirect:/";
         }
+
         model.addAttribute("searchProducts", searchProducts);
         List<CategoryModel> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
         return "buscarProduto";
     }
+
 
 
 
