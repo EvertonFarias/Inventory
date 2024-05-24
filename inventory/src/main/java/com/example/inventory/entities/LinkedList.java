@@ -31,6 +31,64 @@ public class LinkedList implements Iterable<ProductModel> {
         }
     }
 
+    // Método público para ordenar a lista
+    public void sort() {
+        head = mergeSort(head);
+    }
+
+    // Função recursiva que implementa o Merge Sort
+    private Node mergeSort(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+
+        Node middle = getMiddle(head);
+        Node nextOfMiddle = middle.next;
+
+        middle.next = null;
+
+        Node left = mergeSort(head);
+        Node right = mergeSort(nextOfMiddle);
+
+        return merge(left, right);
+    }
+
+    // Função para encontrar o ponto médio da lista
+    private Node getMiddle(Node head) {
+        if (head == null) {
+            return head;
+        }
+
+        Node slow = head;
+        Node fast = head.next;
+
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+
+    // Função para mesclar duas listas ordenadas
+    private Node merge(Node left, Node right) {
+        if (left == null) {
+            return right;
+        }
+        if (right == null) {
+            return left;
+        }
+
+        Node result;
+        if (left.data.getName().compareTo(right.data.getName()) <= 0) {
+            result = left;
+            result.next = merge(left.next, right);
+        } else {
+            result = right;
+            result.next = merge(left, right.next);
+        }
+        return result;
+    }
+
     @Override
     public Iterator<ProductModel> iterator() {
         return new LinkedListIterator();

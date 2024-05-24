@@ -122,10 +122,11 @@ public class ProductController {
         } else {
             return "redirect:/";
         }
-
+        searchProducts.sort();
         model.addAttribute("searchProducts", searchProducts);
         List<CategoryModel> categories = categoryRepository.findAll();
         model.addAttribute("categories", categories);
+
         return "buscarProduto";
     }
 
