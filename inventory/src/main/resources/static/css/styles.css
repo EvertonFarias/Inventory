@@ -31,6 +31,9 @@ header nav ul {
 header nav ul li {
     margin: 0 15px;
 }
+#back {
+    width: 30px;
+}
 
 header nav ul li a {
     color: #fff;
