@@ -70,7 +70,7 @@ http://localhost:8080
 # Licença
 Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
 
-#Créditos
+# Créditos
 
 Desenvolvido por [Everton Farias].
 
